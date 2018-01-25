@@ -19,12 +19,6 @@
          bonus))
     #f))
 
-(define (reply msg txt)
-  (reply-to msg txt
-            #:bot-id bot-id
-            #:bot-token bot-token
-            #:braid-url braid-api-url))
-
 (define (act-on-message msg)
   (let ([roll-req (~> (hash-ref msg '#:content)
                       (string-replace "/roll " "" #:all? #f))])
@@ -35,4 +29,7 @@
             (format "Couldn't parse request ~v" roll-req)
             "Try something like `/roll d6`, `/roll 3d4`, `/roll 2d20+3`")
            (string-join "\n")))
-     (reply msg))))
+     (reply-to msg
+               #:bot-id bot-id
+               #:bot-token bot-token
+               #:braid-url braid-api-url))))
